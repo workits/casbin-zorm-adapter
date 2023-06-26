@@ -34,7 +34,7 @@ if err != nil {
 
 Special thanks to [Casbin Organization](https://casbin.org), they provide a superb authorization library.
 
-And [zorm](https://www.zorm.cn), it's a lightweight ORM.
+And [zorm](https://www.zorm.cn), a lightweight ORM. Maybe you will like it also.
 
 ## License
 
