@@ -1,7 +1,16 @@
 # casbin-zorm-adapter
-zorm adapter for Casbin https://github.com/casbin/casbin
+Casbin ZORM Adapter is the [ZORM](https://www.zorm.cn) Adapter for [Casbin](https://github.com/casbin/casbin). With this library, Casbin can load policy from ZORM supported database or save policy to it.
 
-Based on [zorm](https://www.zorm.cn), and tested in [MySQL](github.com/go-sql-driver/mysql).
+Based on [ZORM Drivers Support](https://www.yuque.com/u27016943/nrgi00/zorm#KKMq5), the current supported databases are:
+
+* mysql: [github.com/go-sql-driver/mysql](github.com/go-sql-driver/mysql)
+* pgsql: [github.com/lib/pq](github.com/lib/pq)
+* dm: [gitee.com/chunanyong/dm](gitee.com/chunanyong/dm)
+* oracle: [github.com/sijms/go-ora/v2](github.com/sijms/go-ora/v2)
+* kingbase
+* shentong
+* gbase
+* clickhouse: [github.com/mailru/go-clickhouse/v2](github.com/mailru/go-clickhouse/v2)
 
 ## Installation
 
@@ -34,9 +43,9 @@ if err != nil {
 
 Special thanks to [Casbin Organization](https://casbin.org), they provide a superb authorization library.
 
-Special thanks to [zorm](https://www.zorm.cn), a lightweight ORM.
+Special thanks to [ZORM](https://www.zorm.cn), a lightweight ORM.
 
-And [SQLX Adapter](https://github.xiaoc.cn/memwey/casbin-sqlx-adapter)@memwey, which testcase I used.
+And [SQLX Adapter](https://github.com/memwey/casbin-sqlx-adapter)@memwey, which testcase I used.
 
 ## License
 
