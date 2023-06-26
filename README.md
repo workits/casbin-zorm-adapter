@@ -22,10 +22,12 @@ if err != nil {
 }
 
 adapter := NewAdapter(dbDao) // you can also use: NewAdapter(db, "your_casbin_rule_table")
-e, err := casbin.NewEnforcer("rbac_model.conf", adapter)
+enforcer, err := casbin.NewEnforcer("rbac_model.conf", adapter)
 if err != nil {
 	panic(err)
 }
+
+// ... do something else
 ```
 
 ## Thanks
