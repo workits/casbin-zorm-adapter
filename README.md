@@ -1,7 +1,7 @@
 # casbin-zorm-adapter
 zorm adapter for Casbin https://github.com/casbin/casbin
 
-Based on [zorm](https://www.zorm.cn), and tested in MySQL
+Based on [zorm](https://www.zorm.cn), and tested in [MySQL](github.com/go-sql-driver/mysql).
 
 ## Installation
 
@@ -21,8 +21,8 @@ if err != nil {
 	panic(err)
 }
 
-adapter := NewAdapter(dbDao) // you can also use: NewAdapter(db, "your_casbin_rule_table")
-enforcer, err := casbin.NewEnforcer("examples/rbac_model.conf", adapter)
+a := NewAdapter(dbDao) // you can also use: NewAdapter(dbDao, "your_casbin_rule_table")
+e, err := casbin.NewEnforcer("examples/rbac_model.conf", a)
 if err != nil {
 	panic(err)
 }
@@ -34,7 +34,9 @@ if err != nil {
 
 Special thanks to [Casbin Organization](https://casbin.org), they provide a superb authorization library.
 
-And [zorm](https://www.zorm.cn), a lightweight ORM. Maybe you will like it also.
+Special thanks to [zorm](https://www.zorm.cn), a lightweight ORM.
+
+And [SQLX Adapter](https://github.xiaoc.cn/memwey/casbin-sqlx-adapter)@memwey, which testcase I used.
 
 ## License
 

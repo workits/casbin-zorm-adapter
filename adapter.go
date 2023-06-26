@@ -34,7 +34,7 @@ type Adapter struct {
 }
 
 // NewAdapter get a zorm-adapter instance
-func NewAdapter(db *zorm.DBDao, tableName ...string) (*Adapter, error) {
+func NewAdapter(dbDao *zorm.DBDao, tableName ...string) (*Adapter, error) {
 	// custom table name
 	switch len(tableName) {
 	case 0:
@@ -45,7 +45,7 @@ func NewAdapter(db *zorm.DBDao, tableName ...string) (*Adapter, error) {
 	}
 
 	// get the zorm-adapter instance with datasource
-	if ctx, err := db.BindContextDBConnection(context.Background()); err != nil {
+	if ctx, err := dbDao.BindContextDBConnection(context.Background()); err != nil {
 		return nil, err
 	} else {
 		return &Adapter{
@@ -155,59 +155,73 @@ func (a *Adapter) SavePolicy(model model.Model) error {
 
 // AddPolicy adds a policy rule to database
 func (a *Adapter) AddPolicy(sec string, ptype string, rule []string) error {
-	line := a.savePolicyLine(ptype, rule)
-	_, err := zorm.Insert(a.ctx, line)
+	_, err := zorm.Transaction(a.ctx, func(ctx context.Context) (interface{}, error) {
+		line := a.savePolicyLine(ptype, rule)
+		_, err := zorm.Insert(a.ctx, line)
+		return nil, err
+	})
+
 	return err
 }
 
 // RemovePolicy removes a policy rule from database
 func (a *Adapter) RemovePolicy(sec string, ptype string, rule []string) error {
-	finder := zorm.NewDeleteFinder(casbinRuleEntityTableName)
-	finder.Append("where ptype = ?", ptype)
-	if len(rule) > 0 {
-		finder.Append("and v0 = ?", rule[0])
-	}
-	if len(rule) > 1 {
-		finder.Append("and v1 = ?", rule[1])
-	}
-	if len(rule) > 2 {
-		finder.Append("and v2 = ?", rule[2])
-	}
-	if len(rule) > 3 {
-		finder.Append("and v3 = ?", rule[3])
-	}
-	if len(rule) > 4 {
-		finder.Append("and v4 = ?", rule[4])
-	}
-	if len(rule) > 5 {
-		finder.Append("and v5 = ?", rule[5])
-	}
-	_, err := zorm.UpdateFinder(a.ctx, finder)
+	_, err := zorm.Transaction(a.ctx, func(ctx context.Context) (interface{}, error) {
+		finder := zorm.NewDeleteFinder(casbinRuleEntityTableName)
+		finder.Append("where ptype = ?", ptype)
+		if len(rule) > 0 {
+			finder.Append("and v0 = ?", rule[0])
+		}
+		if len(rule) > 1 {
+			finder.Append("and v1 = ?", rule[1])
+		}
+		if len(rule) > 2 {
+			finder.Append("and v2 = ?", rule[2])
+		}
+		if len(rule) > 3 {
+			finder.Append("and v3 = ?", rule[3])
+		}
+		if len(rule) > 4 {
+			finder.Append("and v4 = ?", rule[4])
+		}
+		if len(rule) > 5 {
+			finder.Append("and v5 = ?", rule[5])
+		}
+		_, err := zorm.UpdateFinder(a.ctx, finder)
+
+		return nil, err
+	})
+
 	return err
 }
 
 // RemoveFilteredPolicy removes policy rules that match the filter from database
 func (a *Adapter) RemoveFilteredPolicy(sec string, ptype string, fieldIndex int, fieldValues ...string) error {
-	finder := zorm.NewDeleteFinder(casbinRuleEntityTableName)
-	finder.Append("where ptype = ?", ptype)
-	if fieldIndex <= 0 && 0 < fieldIndex+len(fieldValues) && len(fieldValues[0-fieldIndex]) > 0 {
-		finder.Append("and v0 = ?", fieldValues[0-fieldIndex])
-	}
-	if fieldIndex <= 1 && 1 < fieldIndex+len(fieldValues) && len(fieldValues[1-fieldIndex]) > 0 {
-		finder.Append("and v1 = ?", fieldValues[1-fieldIndex])
-	}
-	if fieldIndex <= 2 && 2 < fieldIndex+len(fieldValues) && len(fieldValues[2-fieldIndex]) > 0 {
-		finder.Append("and v2 = ?", fieldValues[2-fieldIndex])
-	}
-	if fieldIndex <= 3 && 3 < fieldIndex+len(fieldValues) && len(fieldValues[3-fieldIndex]) > 0 {
-		finder.Append("and v3 = ?", fieldValues[3-fieldIndex])
-	}
-	if fieldIndex <= 4 && 4 < fieldIndex+len(fieldValues) && len(fieldValues[4-fieldIndex]) > 0 {
-		finder.Append("and v4 = ?", fieldValues[4-fieldIndex])
-	}
-	if fieldIndex <= 5 && 5 < fieldIndex+len(fieldValues) && len(fieldValues[5-fieldIndex]) > 0 {
-		finder.Append("and v5 = ?", fieldValues[5-fieldIndex])
-	}
-	_, err := zorm.UpdateFinder(a.ctx, finder)
+	_, err := zorm.Transaction(a.ctx, func(ctx context.Context) (interface{}, error) {
+		finder := zorm.NewDeleteFinder(casbinRuleEntityTableName)
+		finder.Append("where ptype = ?", ptype)
+		if fieldIndex <= 0 && 0 < fieldIndex+len(fieldValues) && len(fieldValues[0-fieldIndex]) > 0 {
+			finder.Append("and v0 = ?", fieldValues[0-fieldIndex])
+		}
+		if fieldIndex <= 1 && 1 < fieldIndex+len(fieldValues) && len(fieldValues[1-fieldIndex]) > 0 {
+			finder.Append("and v1 = ?", fieldValues[1-fieldIndex])
+		}
+		if fieldIndex <= 2 && 2 < fieldIndex+len(fieldValues) && len(fieldValues[2-fieldIndex]) > 0 {
+			finder.Append("and v2 = ?", fieldValues[2-fieldIndex])
+		}
+		if fieldIndex <= 3 && 3 < fieldIndex+len(fieldValues) && len(fieldValues[3-fieldIndex]) > 0 {
+			finder.Append("and v3 = ?", fieldValues[3-fieldIndex])
+		}
+		if fieldIndex <= 4 && 4 < fieldIndex+len(fieldValues) && len(fieldValues[4-fieldIndex]) > 0 {
+			finder.Append("and v4 = ?", fieldValues[4-fieldIndex])
+		}
+		if fieldIndex <= 5 && 5 < fieldIndex+len(fieldValues) && len(fieldValues[5-fieldIndex]) > 0 {
+			finder.Append("and v5 = ?", fieldValues[5-fieldIndex])
+		}
+		_, err := zorm.UpdateFinder(a.ctx, finder)
+
+		return nil, err
+	})
+
 	return err
 }
