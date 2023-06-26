@@ -11,9 +11,9 @@ Based on [zorm](https://www.zorm.cn), and tested in MySQL
 
 ```go
 dbConfig := &zorm.DataSourceConfig{
-    DSN:                   "root:password@tcp(127.0.0.1:3306)/casbin?charset=utf8&parseTime=true&loc=Local",
-    DriverName:            "mysql",
-    Dialect:               "mysql",
+    DSN:        "root:password@tcp(127.0.0.1:3306)/casbin?charset=utf8&parseTime=true&loc=Local",
+    DriverName: "mysql",
+    Dialect:    "mysql",
 	// ... more configurations
 }
 dbDao, err := zorm.NewDBDao(dbConfig)
@@ -22,17 +22,17 @@ if err != nil {
 }
 
 adapter := NewAdapter(dbDao) // you can also use: NewAdapter(db, "your_casbin_rule_table")
-enforcer, err := casbin.NewEnforcer("rbac_model.conf", adapter)
+enforcer, err := casbin.NewEnforcer("examples/rbac_model.conf", adapter)
 if err != nil {
 	panic(err)
 }
 
-// ... do something else
+// ... do your things
 ```
 
 ## Thanks
 
-Special thanks to [casbin team](https://github.com/casbin/casbin), they provide a superb authorization library.
+Special thanks to [Casbin Organization](https://casbin.org), they provide a superb authorization library.
 
 And [zorm](https://www.zorm.cn), it's a lightweight ORM.
 
