@@ -10,14 +10,9 @@ import (
 )
 
 var dbDao, _ = zorm.NewDBDao(&zorm.DataSourceConfig{
-	DSN:                   "root:password@tcp(127.0.0.1:3306)/casbin?charset=utf8&parseTime=true&loc=Local",
-	DriverName:            "mysql",
-	Dialect:               "mysql",
-	SlowSQLMillis:         0,
-	MaxOpenConns:          0,
-	MaxIdleConns:          0,
-	ConnMaxLifetimeSecond: 0,
-	DefaultTxOptions:      nil,
+	DSN:        "root:password@tcp(127.0.0.1:3306)/casbin?charset=utf8&parseTime=true&loc=Local",
+	DriverName: "mysql",
+	Dialect:    "mysql",
 })
 
 func testGetPolicy(t *testing.T, e *casbin.Enforcer, res [][]string) {
