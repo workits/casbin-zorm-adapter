@@ -7,9 +7,9 @@ Based on [ZORM Drivers Support](https://www.yuque.com/u27016943/nrgi00/zorm#KKMq
 * pgsql: [github.com/lib/pq](github.com/lib/pq)
 * dm: [gitee.com/chunanyong/dm](gitee.com/chunanyong/dm)
 * oracle: [github.com/sijms/go-ora/v2](github.com/sijms/go-ora/v2)
-* kingbase
-* shentong
-* gbase
+* kingbase: official driver(authorization required)
+* shentong: official driver(authorization required)
+* gbase: ODBC
 * clickhouse: [github.com/mailru/go-clickhouse/v2](github.com/mailru/go-clickhouse/v2)
 
 ## Installation
