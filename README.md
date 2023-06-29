@@ -14,7 +14,7 @@ Based on [ZORM Drivers Support](https://www.yuque.com/u27016943/nrgi00/zorm#KKMq
 
 ## Installation
 
-    go get -u github.com/tseman1206/casbin-zorm-adapter
+    go get github.com/tseman1206/casbin-zorm-adapter
 
 ## Usage example
 
@@ -49,4 +49,4 @@ And [SQLX Adapter](https://github.com/memwey/casbin-sqlx-adapter)@memwey, which 
 
 ## License
 
-This project is under MIT License. See the [LICENSE](LICENSE) file for the full license text.
+This project is under Apache 2.0 License. See the [LICENSE](LICENSE) file for the full license text.
