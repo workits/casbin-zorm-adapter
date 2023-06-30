@@ -35,6 +35,11 @@ type Adapter struct {
 
 // NewAdapter get a zorm-adapter instance
 func NewAdapter(dbDao *zorm.DBDao, tableName ...string) (*Adapter, error) {
+	return NewAdapterWithContext(context.Background(), dbDao, tableName...)
+}
+
+// NewAdapterWithContext get a zorm-adapter instance with context
+func NewAdapterWithContext(ctx context.Context, dbDao *zorm.DBDao, tableName ...string) (*Adapter, error) {
 	// custom table name
 	switch len(tableName) {
 	case 0:
@@ -45,7 +50,7 @@ func NewAdapter(dbDao *zorm.DBDao, tableName ...string) (*Adapter, error) {
 	}
 
 	// get the zorm-adapter instance with datasource
-	if ctx, err := dbDao.BindContextDBConnection(context.Background()); err != nil {
+	if ctx, err := dbDao.BindContextDBConnection(ctx); err != nil {
 		return nil, err
 	} else {
 		return &Adapter{
