@@ -14,7 +14,7 @@ Based on [ZORM Drivers Support](https://www.yuque.com/u27016943/nrgi00/zorm#KKMq
 
 ## Installation
 
-    go get github.com/tseman1206/casbin-zorm-adapter
+    go get -u github.com/workits/casbin-zorm-adapter
 
 ## Usage example
 
